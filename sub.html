@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오로나민C</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    mobile_menu();
+});
+
+function mobile_menu(){
+    /* 변수 선언 */
+    var $menu = null;
+    var $left_gnb = null; // 영역 전체
+    var $depth1_wrap = null;
+    var $depth1 = null;
+    var $depth1_btn = null;
+    
+    /* 시작 함수 */
+    function start(){
+        init();
+        init_event();
+    }
+    /* 변수 초기화 함수 */
+    function init(){
+        $menu = $('.m_menu');
+        $left_gnb = $('.left_gnbWrap'); // 영역 전체
+        $depth1_wrap = $('.left_gnb>li');
+        $depth1 = $depth1_wrap.children('ul');
+        $depth1_btn = $depth1_wrap.children('a');
+    }
+    /* 이벤트 함수 */
+    function init_event(){
+        
+        /* 모바일 메뉴 버튼 클릭했을때 모바일 메뉴영역 나오게 하기 */
+        $menu.click(function(event){
+            event.preventDefault();
+            $left_gnb.addClass('on');
+        });
+        
+        /* x버튼 눌렀을때 모바일 메뉴 닫기 */
+        $('.close').click(function(event){
+            event.preventDefault();
+
+            $left_gnb.removeClass('on');
+            
+            // x버튼 누르면 시간차 약간두고 소메뉴 닫히게 하기
+            setTimeout(function(){
+                $depth1_btn.removeClass('on');
+                $depth1.slideUp();
+            },300)
+        });
+        
+        /* depth1의 각메뉴 클릭시 depth2 나오게 하기 */
+        $depth1_btn.click(function(event){
+            event.preventDefault();
+            var $this = $(this);
+            var $this_ul = $this.siblings('ul');
+
+            var check = $this.hasClass('on');
+            if(check){
+                $this.removeClass('on');
+                $this_ul.stop(true,true).slideUp();
+            }else{
+                $depth1_btn.removeClass('on');
+                $depth1.stop().slideUp();
+                $this.addClass('on');
+                $this_ul.stop(true,true).slideDown();
+            }
+        });
+        
+        /* 디바이스 크기 변경시 모바일 메뉴영역 숨기기 */
+        $(window).resize(function(){
+            $left_gnb.removeClass('on');
+        });
+    }
+    
+    start(); // 시작 호출
+}
+</script>
+</head>
+<body>
+    <div id="wrap">
+        <header id="header">
+            <div class="top_header">
+                <div class="inner">
+                    <ul class="site">
+                        <li>개인</li>
+                        <li>기업</li>
+                        <li>
+                            <select>
+                                <option>지역방송</option>
+                                <option>서울</option>
+                                <option>부산</option>
+                            </select>
+                        </li>
+                    </ul>
+                    <ul class="util">
+                        <li>로그인</li>
+                        <li>회원가입</li>
+                        <li>사이트맵</li>
+                        <li>ENGLISH</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="bottom_header">
+                <div class="inner">
+                    <ul class="menu">
+                        <li><a href="#">회사소개</a>
+                        <ul class="submenu">
+                            <li><a href="#">연혁</a></li>
+                            <li><a href="#">소개말</a></li>
+                            <li><a href="#">오시는길</a></li>
+                        </ul></li>
+                        <li><a href="sub.html">브랜드</a>
+                        <ul class="submenu">
+                            <li><a href="#">오로나민C</a></li>
+                            <li><a href="#">포카리스웨트</a></li>
+                            <li><a href="#">오란씨</a></li>
+                        </ul></li>
+                        <li><a href="#">채용정보</a>
+                         <ul class="submenu">
+                             <li><a href="#">인사채용</a></li>
+                             <li><a href="#">인재상</a></li>
+                             <li><a href="#">성공사례</a></li>
+                         </ul></li>
+                        <li><a href="#">고객센터</a>
+                         <ul class="submenu">
+                             <li><a href="#">문의하기</a></li>
+                             <li><a href="#">주문하기</a></li>
+                             <li><a href="#">고객게시판</a></li>
+                         </ul></li>
+                    </ul>
+                    <div class="logo">
+                        <a href="index.html"><img src="img/logo.png" alt="로고"></a>
+                    </div>
+                    <div class="sub_menu">
+                        <ul class="side">
+                            <li>STORY</li>
+                            <li>NEWS</li>
+                        </ul>
+                        <div class="search">
+                            <img src="img/serch.png" alt="돋보기">
+                        </div>
+                        <div class="m_menu">
+                            <a href="#"><img src="img/menu.png" alt="메뉴"></a>
+                        </div>
+                        <nav class="left_gnbWrap">
+            <a href="#" class="close">close</a>
+            <ul class="left_gnb">
+                <li>
+                    <a href="#">회사소개</a>
+                    <ul>
+                        <li><a href="#">연혁</a></li>
+                        <li><a href="#">소개말</a></li>
+                        <li><a href="#">오시는길</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">브랜드</a>
+                    <ul>
+                        <li><a href="#">오로나민C</a></li>
+                        <li><a href="#">포카리스웨트</a></li>
+                        <li><a href="#">오란씨</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">채용정보</a>
+                    <ul>
+                        <li><a href="#">인사채용</a></li>
+                        <li><a href="#">인재상</a></li>
+                        <li><a href="#">성공사례</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">고객센터</a>
+                    <ul>
+                        <li><a href="#">문의하기</a></li>
+                        <li><a href="#">주문하기</a></li>
+                        <li><a href="#">고객게시판</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main id="contents">
+            <section class="linkbutten">
+                <h1 class="hidden">브랜드메뉴</h1>
+                <div class="inner">
+                    <ul>
+                        <li>
+                            <img src="img/sub_header-c.png" alt="c모양">
+                        </li>
+                        <li>
+                            <select>
+                                <option>브랜드</option>
+                            </select>
+                        </li>
+                        <li>
+                            <select>
+                                <option>오로나민C</option>
+                            </select>
+                        </li>
+                        <li>
+                            <select>
+                                <option>오로나민C 특별한 병뚜껑</option>
+                            </select>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <section class="sub_img">
+                <h1 class="hidden">서브이미지</h1>
+            </section>
+            <section class="sub_story">
+                <h1 class="hidden">오로나민C</h1>
+                <h2>쉽고 안전한 MAXI-CAP 여는 방법!</h2>
+                <div class="storyset">
+                    <dl>
+                        <dt><i><img src="img/sub_box1_1.jpg"></i></dt>
+                        <dd><p>뚜껑 손잡이에<br>검지손가락을 걸어 준 뒤</p></dd>
+                    </dl>
+                    <dl>
+                        <dt><i><img src="img/sub_box1_2.jpg"></i></dt>
+                        <dd><p>엄지 손가락을 지렛대처럼<br>뚜껑 반대편에 살며시 올려놓은 후</p></dd>
+                    </dl>
+                    <dl>
+                        <dt><i><img src="img/sub_box1_3.jpg"></i></dt>
+                        <dd><p>손잡이를 위 쪽으로<br>부드럽게 올려주면</p></dd>
+                    </dl>
+                    <dl>
+                        <dt><i><img src="img/sub_box1_4.jpg"></i></dt>
+                        <dd><p>안전하게 뚜껑이<br>퐁!!!하고 분리됩니다.</p></dd>
+                    </dl>
+                    <dl>
+                        <dt><i><img src="img/sub_box1_5.jpg"></i></dt>
+                        <dd><p>개봉한 CAP은 절단면을<br>주의하여 분리수거 해주세요.</p></dd>
+                    </dl>
+                </div>
+            </section>
+            <section class="sub_cf">
+                <h1 class="hidden">오로나민CF</h1>
+                <div class="inner">
+                    <h3>오로나민C TV CF</h3>
+                <div class="cfset">
+                    <div class="left_cf">
+                        <img src="img/sub_box2_1.jpg">
+                        <p>오로나민C TVCF<br>KOREA(2019)</p>
+                    </div>
+                    <div class="right_cf">
+                        <img src="img/sub_box2_2.png">
+                        <p>오로나민C TVCF<br>KOREA(2020)</p>
+                    </div>
+                </div>
+                </div>
+                
+            </section>
+            <section class="sub_ba">
+                <h1 class="hidden">개인메뉴</h1>
+                <div class="inner">
+                    <ul>
+                        <li>개인</li>
+                        <li>기업</li>
+                        <li>지역</li>
+                        <li>회사소개</li>
+                        <li>고객센터</li>
+                    </ul>
+                    <div class="family">
+                        <select>
+                    <option>FAMILY SITE</option>
+                    <option>포카리 스웨트</option>
+                    <option>오란씨</option>
+                </select>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer id="footer">
+            <div class="top_footer">
+                <div class="inner">
+                    <ul>
+                        <li>회사소개</li>
+                        <li>이용약관</li>
+                        <li>개인정보취급방침</li>
+                        <li>이메일무단수집거부</li>
+                        <li>고객센터</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="bottom_footer">
+                <div class="inner">
+                    <div class="f_logo">
+                        <img src="img/f_logo.png" alt="푸터로고">
+                    </div>
+                    <div class="copyright">
+                        <p>주소:02587,서울특별시 동대문구 천호대로 64</p>
+                        <p>Copyright ⓒ 2015 Donga Otsuka.Co.All Rights Reserved.</p>
+                    </div>
+                    <div class="info">
+                        <p>고객센터<span>080-999-7644</span></p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
